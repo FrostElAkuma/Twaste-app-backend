@@ -5,7 +5,8 @@ namespace App\CentralLogics;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-
+//So I can use the business_settings from my DB. That BusinessSetting is a model that we created
+use App\Models\BusinessSetting;
 use Illuminate\Support\Facades\DB;
 
 class Helpers
@@ -17,5 +18,20 @@ class Helpers
             array_push($err_keeper, ['code' => $index, 'message' => $error[0]]);
         }
         return $err_keeper;
+    }
+
+    public static function get_business_settings($name)
+    {
+        $config = null;
+
+        $paymentmethod = BusinessSetting::where('key', $name)->first();
+
+        if ($paymentmethod) {
+
+            $config = json_decode(json_encode($paymentmethod->value), true);
+            $config = json_decode($config, true);
+        }
+
+        return $config;
     }
 }
