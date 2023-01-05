@@ -55,14 +55,13 @@
             <div class="checkout_details mt-3">
                 <div class="row">
 
-
-                    @php($config=\App\CentralLogics\Helpers::get_business_settings('paypal'))
-                    @if($config['status'])
+                    <!-- Originally there was an if statemnt here but I removed it for now cuz it was giving me an error-->
                         <div class="col-md-6 mb-4" style="cursor: pointer">
                             <div class="card">
                                 <div class="card-body pb-0 pt-1" style="height: 70px">
+                                <!--Originally this action led to the papal route, but since i won't integrate payapl for now the route leads to payment-success -->
                                     <form class="needs-validation" method="POST" id="payment-form"
-                                          action="{{route('pay-paypal')}}">
+                                          action="{{route('payment-success')}}">
                                         {{ csrf_field() }}
                                         <button class="btn btn-block" type="submit">
                                             <img width="100"
@@ -72,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+
 
 
                 </div>
@@ -82,6 +81,7 @@
 </div>
 
 <!-- JS Front -->
+<!--I get error from chrome when I try to use these Js files using ngrok. But locally It is fine. Will have ot see later when I launch the app -->
 <script src="{{asset('assets/admin')}}/js/custom.js"></script>
 <script src="{{asset('assets/admin')}}/js/vendor.min.js"></script>
 <script src="{{asset('assets/admin')}}/js/theme.min.js"></script>
@@ -92,7 +92,7 @@
 
 
 
-{!! Toastr::message() !!}
+<!-- There was a Toastr method here that i delted it was for paypal-->
 
 </body>
 </html>

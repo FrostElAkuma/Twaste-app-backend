@@ -21,7 +21,9 @@ class PaymentController extends Controller
         $customer = User::find($request['customer_id']);
         
         $order = Order::where(['id' => $request->order_id, 'user_id' => $request['customer_id']])->first();
-        
+        //session()->put('customer', $order);
+        //This dd very helpful for debugging
+        //dd($request);
         if (isset($customer) && isset($order)) {
             $data = [
                 'name' => $customer['f_name'],
