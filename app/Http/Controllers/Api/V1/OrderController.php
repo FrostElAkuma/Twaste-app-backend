@@ -106,9 +106,11 @@ class OrderController extends Controller
             ]
         ], 403);
     }
-
+    //You can always access the request object in lavarel as longa s the user is logged in
     public function get_order_list(Request $request)
     {
+        //VIP in lavarel if your DB table name is Orders the model name is Order (You can have it as Orders as well but it is not good practice)
+        //We get() all the orders of that user and put them in a ->map
         $orders = Order::withCount('details')->where(['user_id' => $request->user()->id])->get()->map(function ($data) {
             $data['delivery_address'] = $data['delivery_address']?json_decode($data['delivery_address']):$data['delivery_address'];   
 

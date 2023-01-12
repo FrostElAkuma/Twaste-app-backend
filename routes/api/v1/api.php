@@ -30,7 +30,7 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::post('login', 'CustomerAuthController@login');
         });
    
-        //This is gaurded with 'middleware' => 'auth:api', It is used for security, it makes sure that each user is treated differently and data does not match up
+        //This is gaurded with 'middleware' => 'auth:api', It is used for security and it is pre built in lavarel, it makes sure that each user is treated differently and data does not match up
         Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
             Route::get('notifications', 'NotificationController@get_notifications');
             Route::get('info', 'CustomerController@info');
