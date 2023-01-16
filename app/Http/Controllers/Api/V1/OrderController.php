@@ -45,7 +45,12 @@ class OrderController extends Controller
         $order->pending = now(); //checked
         $order->created_at = now(); //checked
         $order->updated_at = now();//checked
+        $order->order_type = $request['order_type'];
         
+        $order->payment_status = $request['payment_method']=='wallet'?'paid':'unpaid';
+        $order->order_status = $request['payment_method']=='digital_payment'?'failed':
+            ($request->payment_method == 'wallet'?'confirmed':'pending');
+        $order->payment_method = $request->payment_method;
         foreach ($request['cart'] as $c) {
      
                 $product = Food::find($c['id']); //checked
