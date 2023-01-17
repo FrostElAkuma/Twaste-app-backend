@@ -95,6 +95,13 @@ class OrderController extends Controller
             */
             OrderDetail::insert($order_details);
 
+            //For sending notifications
+            //->user() getting current user info. Also we have this fire_base token in our users DB
+            //The user's device token will be the firebase token and we save it to DB ?
+            //We will send the notification thro Helpers function as you can see
+            Helpers::send_order_notification($order, $request->user()->cm_firebase_token);
+
+
             return response()->json([
                 'message' => trans('messages.order_placed_successfully'),
                 'order_id' =>  $save_order,
