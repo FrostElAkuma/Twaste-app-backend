@@ -14,6 +14,7 @@ Route::group([
     $router->resource('foods', FoodsController::class);
     $router->resource('food-types', FoodTypeController::class);
     $router->get('/', 'HomeController@index')->name('home');
+    $router->resource('restaurants', RestaurantController::class);
 
 
 });

@@ -11,7 +11,7 @@ class ProductController extends Controller
     public function get_popular_products(Request $request){
         //I added the orderBy so the popular products show newest first
         $list = Food::where('type_id', 2)->take(10)->orderBy('created_at', 'DESC')->get();
-        
+                //Getting out informatiopn that we dont want
                 foreach ($list as $item){
                     $item['description']=strip_tags($item['description']);
                     $item['description']=$Content = preg_replace("/&#?[a-z0-9]+;/i"," ",$item['description']); 
