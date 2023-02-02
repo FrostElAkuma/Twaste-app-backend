@@ -8,6 +8,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show; 
 
+//Note these Controllers inside the Admin Folder is just for the Laravel Admin Panel
 class RestaurantController extends AdminController
 {
     /**
@@ -30,6 +31,7 @@ class RestaurantController extends AdminController
         //$grid->column('id', __('Id'));
         $grid->id("Restaurant ID");
         $grid->column('name', __('Name'));
+        $grid->column('img', __('Thumbnail Photo'))->image('',60,60);
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -49,6 +51,7 @@ class RestaurantController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
+        $show->field('img', __('Image'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -66,7 +69,8 @@ class RestaurantController extends AdminController
         $form = new Form(new Restaurant());
 
         $form->text('name', __('Name'));
-
+        $form->image('img', __('Thumbnail'))->uniqueName();
+    
         return $form;
     }
 }

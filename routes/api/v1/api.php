@@ -29,6 +29,12 @@ Route::group(['namespace' => 'Api\V1'], function () {
         Route::post('register', 'CustomerAuthController@register');
         Route::post('login', 'CustomerAuthController@login');
         });
+
+        //Restaurant info
+        Route::group(['prefix' => 'restaurant'], function () {
+            Route::get('info', 'RestaurantController@get_info');
+            //Route::post('login', 'CustomerAuthController@login');
+            });
    
         //This is gaurded with 'middleware' => 'auth:api', It is used for security and it is pre built in lavarel, it makes sure that each user is treated differently and data does not match up
         Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function () {
@@ -59,6 +65,7 @@ Route::group(['namespace' => 'Api\V1'], function () {
             
         Route::group(['prefix' => 'config'], function () {
         Route::get('/', 'ConfigController@configuration');
+        //need to remove the / ?
         Route::get('/get-zone-id', 'ConfigController@get_zone');
         Route::get('place-api-autocomplete', 'ConfigController@place_api_autocomplete');
         Route::get('distance-api', 'ConfigController@distance_api');

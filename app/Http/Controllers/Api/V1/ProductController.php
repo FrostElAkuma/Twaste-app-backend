@@ -30,7 +30,8 @@ class ProductController extends Controller
  
     }
         public function get_recommended_products(Request $request){
-        $list = Food::where('type_id', 3)->take(10)->orderBy('created_at', 'DESC')->get();
+        
+            $list = Food::where('type_id', $request['restaurantid'])->take(10)->orderBy('created_at', 'DESC')->get();
         
                 foreach ($list as $item){
                     $item['description']=strip_tags($item['description']);
@@ -41,7 +42,7 @@ class ProductController extends Controller
                 
                  $data =  [
                     'total_size' => $list->count(),
-                    'type_id' => 3,
+                    'type_id' => (int)$request->restaurantid,
                     'offset' => 0,
                     'products' => $list
                 ];
