@@ -33,7 +33,8 @@ Route::group(['namespace' => 'Api\V1'], function () {
         //Restaurant info
         Route::group(['prefix' => 'restaurant'], function () {
             Route::get('info', 'RestaurantController@get_info');
-            //Route::post('login', 'CustomerAuthController@login');
+            //~5 hours just to realize I had a typo in below line :DD
+            Route::post('upload', 'RestaurantController@upload');
             });
    
         //This is gaurded with 'middleware' => 'auth:api', It is used for security and it is pre built in lavarel, it makes sure that each user is treated differently and data does not match up
