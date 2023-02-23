@@ -2,9 +2,11 @@
 namespace App\Models;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Food extends Model
 {
+    use HasFactory;
     use DefaultDatetimeFormat;
     //table name
     protected $table = 'foods';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\Food;
 
 class RestaurantController extends Controller
 {
@@ -64,6 +65,39 @@ class RestaurantController extends Controller
        //The above is for the testing video, but in reality I am storing my images under uploads/images. So myseverver.com/uplouds/images/myImage.png
        //Please note i should have the full image path below. Currently I dont but ned to update in future
        return response()->json(['message' => trans('images/'.$imageName)], 200);
+   }
+
+   public function new(Request $request){
+
+    $meal = new Food();
+    $meal->name = $request->name;
+    $meal->price = $request->price;
+    $meal->img = $request->img;//"images/2023-02-23-63f7bb5ec2cd4.png";
+    $meal->description = "olalala";
+    $meal->stars = 4;
+    $meal->people = 5;
+    $meal->selected_people = 5;
+    $meal->location = "UAE";
+    $meal->type_id = 2;
+    $meal->created_at = now(); 
+    $meal->updated_at = now();
+
+    $meal->save();
+    return response()->json('oki',200);
+    /*
+    $meal = Food::create([
+        'name' => "thisWorking?",
+        'description' => "olalala",
+        'price'=> 33,
+        'stars' => 4,
+        'people' => 5,
+        'selected_people' => 5,
+        'img' => "images/9effe833ef9f578bdcd84643995f6acc.png",//$request->img
+        'location' => "UAE",
+        'created_at' => now(),
+        'updated_at' => now(),
+        'type_id' => 2,
+    ]);*/
    }
 
 }
