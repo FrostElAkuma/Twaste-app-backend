@@ -11,7 +11,7 @@ class RestaurantController extends Controller
         
     public function get_info(Request $request){
         //I added the orderBy so the popular products show newest first
-        $list = Restaurant::orderBy('created_at', 'DESC')->get();
+        $list = Restaurant::orderBy('created_at')->get(); //This was after created at , 'DESC'
                 //Getting out informatiopn that we dont want
                 /*
                 foreach ($list as $item){

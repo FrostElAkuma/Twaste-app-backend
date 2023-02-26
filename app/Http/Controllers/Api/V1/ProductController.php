@@ -10,7 +10,7 @@ class ProductController extends Controller
         
     public function get_popular_products(Request $request){
         //I added the orderBy so the popular products show newest first
-        $list = Food::where('type_id', 2)->take(10)->orderBy('created_at', 'DESC')->get();
+        $list = Food::where('type_id', 3)->take(10)->orderBy('created_at', 'DESC')->get();
                 //Getting out informatiopn that we dont want
                 foreach ($list as $item){
                     $item['description']=strip_tags($item['description']);
@@ -21,7 +21,7 @@ class ProductController extends Controller
                 
                  $data =  [
                     'total_size' => $list->count(),
-                    'type_id' => 2,
+                    'type_id' => 3,
                     'offset' => 0,
                     'products' => $list
                 ];
