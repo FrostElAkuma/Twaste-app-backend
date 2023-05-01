@@ -18,6 +18,7 @@ Route::group(['namespace' => 'Api\V1'], function () {
        Route::group(['prefix' => 'products'], function () {
         Route::get('popular', 'ProductController@get_popular_products');
          Route::get('recommended', 'ProductController@get_recommended_products');
+         Route::post('updateRemaining', 'ProductController@update_remaining_products');
           //I added this for our new drinks entry that we added in the larvarel admin pannel
           //Route::get('drinks', 'ProductController@get_drinks');
            

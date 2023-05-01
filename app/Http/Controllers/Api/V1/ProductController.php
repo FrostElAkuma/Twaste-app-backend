@@ -50,6 +50,18 @@ class ProductController extends Controller
          return response()->json($data, 200);
     }
 
+    public function update_remaining_products(Request $request){
+        
+        /*$meal = Food::where('id', $request->id)->get();
+    
+            $meal['remaining'] = $request->remaining;
+            $meal->save();*/
+
+            //This is the correct way to update an item in DB. I got it from stack overflow. Above incorrect code was me trying to do it out of my mind.
+            Food::where('id', $request->id)->update(array('remaining' => $request->remaining));
+            
+}
+
     public function get_drinks(Request $request){
         $list = Food::where('type_id', 5)->take(10)->get();
         
