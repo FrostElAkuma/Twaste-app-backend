@@ -55,6 +55,9 @@ class OrderController extends Controller
      
                 $product = Food::find($c['id']); //checked
                 if ($product) {
+
+                    //Added this so we subtract from the meals remaining 
+                    Food::where('id', $c['id'])->update(array('remaining' => ($product['remaining'] - $c['quantity'])));
             
                     $price = $product['price']; //checked 
                     
