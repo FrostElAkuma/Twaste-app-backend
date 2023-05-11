@@ -54,6 +54,15 @@ class OrderController extends Controller
         foreach ($request['cart'] as $c) {
      
                 $product = Food::find($c['id']); //checked
+
+                if($product['remaining'] <= 0){
+                    return response()->json([
+                        'errors' => [
+                            ['code' => 'order_time', 'message' => trans("Item {$product['name']} is no longer available")]
+                        ]
+                    ], 403);
+                }
+
                 if ($product) {
 
                     //Added this so we subtract from the meals remaining 
