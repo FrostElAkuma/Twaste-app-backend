@@ -72,8 +72,10 @@ class RestaurantController extends Controller
     $meal = new Food();
     $meal->name = $request->name;
     $meal->price = $request->price;
+    $meal->new_price = $request->new_price;
+    $meal->remaining = 0;
     $meal->img = $request->img;//"images/2023-02-23-63f7bb5ec2cd4.png";
-    $meal->description = "olalala";
+    $meal->description = $request->description;
     $meal->stars = 4;
     $meal->people = 5;
     $meal->selected_people = 5;
