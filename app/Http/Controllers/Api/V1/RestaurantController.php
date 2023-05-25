@@ -80,12 +80,12 @@ class RestaurantController extends Controller
     $meal->people = 5;
     $meal->selected_people = 5;
     $meal->location = "UAE";
-    $meal->type_id = 2;
+    $meal->type_id = $request->typeId;
     $meal->created_at = now(); 
     $meal->updated_at = now();
 
     $meal->save();
-    return response()->json('oki',200);
+    return response()->json('New Meal Added',200);
     /*
     $meal = Food::create([
         'name' => "thisWorking?",
