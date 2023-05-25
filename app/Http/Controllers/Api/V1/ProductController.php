@@ -62,6 +62,19 @@ class ProductController extends Controller
             
 }
 
+public function remove_item(Request $request){
+        
+    /*$meal = Food::where('id', $request->id)->get();
+
+        $meal['remaining'] = $request->remaining;
+        $meal->save();*/
+
+        //This is the correct way to update an item in DB. I got it from stack overflow. Above incorrect code was me trying to do it out of my mind.
+        Food::where('id', $request->id)->delete();
+        return response()->json(['message' => 'Item deleted successfully'], 200);
+        
+}
+
 public function cart_remaining_products(Request $request){
     //NOTE THE 2 CODE LINES BELOW DOES NOT ACTUALLY STORE THE DATA PROPERLY. CUZ I THINK IT HAS TO DO WITH THE ARRAY I AM SENDING BEING CONVERTED TO A STRING
     //Took me 5 hours to solve this. But this linked helped me https://laracasts.com/discuss/channels/laravel/convert-string-array-to-array-of-ints
