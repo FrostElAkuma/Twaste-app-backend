@@ -53,15 +53,15 @@ class CustomerController extends Controller{
         DB::table('customer_addresses')->insert($address);
         return response()->json(['message' => trans('messages.successfully_added')], 200);
     }
-        public function update_address(Request $request,$id)
+        public function update_address(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'contact_person_name' => 'required',
-            'address_type' => 'required',
+            //'address_type' => 'required',
             'contact_person_number' => 'required',
             'address' => 'required',
-            'longitude' => 'required',
-            'latitude' => 'required',
+            //'longitude' => 'required',
+            //'latitude' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -85,11 +85,11 @@ class CustomerController extends Controller{
             'address' => $request->address,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
-            'zone_id' => 1,
+            //'zone_id' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ];
         DB::table('customer_addresses')->where('user_id', $request->user()->id)->update($address);
-        return response()->json(['message' => trans('messages.updated_successfully'),'zone_id'=>$zone->id], 200);
+        return response()->json(['message' => trans('messages.updated_successfully')], 200);
     }
 }
