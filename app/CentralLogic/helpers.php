@@ -34,31 +34,36 @@ class Helpers
 
         return $config;
     }
-
+    
     public static function send_order_notification($order, $token){
-
+        
         try {
-            $status = $order-order_status;
+            $status = $order->order_status;
 
             //Checking the kind of status for the order before sending notification
+            //error_log('I am inside the notification proccess 1 ');
+            //error_log(print_r($status,true));
             $value = self::order_status_update_message($status);
+            //error_log('I am inside the notification proccess 2');
 
             //If not null, not zero, etc.
-            if($value) {
-                
+            if(true) {
+                //error_log('I am inside the notification proccess 3');
                 //data of our notification. Image and type not really important
                 $data = [
                     'title' =>trans('messages.order_push_title'),
-                    'description' => $value,
-                    'order_id' => $order-id,
+                    'description' => "aaa finally working",
+                    'order_id' => $order->id,
                     'image' => '',
                     'type' => 'order_status',
                 ];
 
                 //This is the function that actually send the notification to our device
                 //Also Note we used self:: because the send_push_notif... function is in the same file
+                ///error_log('I am inside the notification proccess 4');
+                //error_log(print_r($token,true));
                 self::send_push_notif_to_device($token, $data);
-
+                //error_log('I am inside the notification proccess 5');
                 //Saving notifications sent to a certain user in our DB
                 try{
                     DB::table('user_notifications')->insert([
@@ -89,17 +94,29 @@ class Helpers
         }
         else {
             $key = BusinessSetting::where(['key' => 'push_notification_key'])->first()->value;
+            //Ok so I am getting the key correctly
+            //error_log('I am inside helpers line 96');
+            //error_log(print_r($key,true));
         }
 
         //The url where we will send the message to the firebase server. It is the endpoint
-        $url = "https//fcm.googleapis.come/fcm/send";
+        $url = "https://fcm.googleapis.com/fcm/send";
         //Have no idea what the below line does and what is that syntax
         //The content we are passing is the key that we got from firebase. This header is the info that the api needs
-        $header = array("authorization: key=" . $key['content'] . "",);
+        //I can check in postman as well
+        //error_log('I am inside helpers line 107');
+        /*$header = array("authorization: key=" . $key['content'] . "",
+            "content-type: application/json"
+        );*/
+        $header = [
+            'Authorization: key=' . $key,
+            'Content-Type: application/json',
+        ];
 
         //I need to look into the "'..'" syntax (I think it is php json syntax)
         //Note reminder the fcm token is the user device token
         //This is the data that we will send over to google firebase servers
+        //error_log('I am inside helpers line 114');
         $postdata = '{
             "to" : "' . $fcm_token . '",
             "mutable_content": true,
@@ -123,18 +140,29 @@ class Helpers
             }
         }';
 
+        //error_log(print_r($postdata,true));
+
+        //error_log('I am inside helpers line 142');
         //Need to look into these as well the CURL
         //These are the options that Google needs to send the info to google fire base server. 
         $ch = curl_init();
+        //error_log('I am inside helpers line 149');
         $timeout = 120;
-        curl__setopt($ch, CURLOPT_URL, $url);
-        curl__setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl__setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl__setopt($ch, CURLOPT_CUSTOMERREUEST, "POST");
-        curl__setopt($ch, CURLOPT_POSTFIELDS, $postdata);
-        curl__setopt($ch, CURLOPT_HTTPHEADER, $header);
+        //error_log('I am inside helpers line 151');
+        //Had a typo here. Had 2 underscores :')
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //error_log('I am inside helpers line 153');
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        //error_log('I am inside helpers line 158');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+        //error_log('I am inside helpers line 160');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        //error_log('I am inside helpers line 162');
 
         //Get URL content and checking the results of us trying to send the data
+        //error_log('I am inside helpers line 165');
         $result = curl_exec($ch);
         if($result === FALSE) {
             dd( curl_error($ch));
@@ -151,6 +179,9 @@ class Helpers
         //Each of these messages are inside our Db as Json format
         if($status == 'pending'){
             $data = BusinessSetting::where('key', 'order_pending_message')->first();
+            //error_log('hehehe I am ehreere');
+            //error_log(print_r($data,true));
+            return "order pending";
         }
         elseif ($status == 'confirmed') {
             $data = BusinessSetting::where('key', 'order_confirmation_message')->first();
@@ -182,7 +213,7 @@ class Helpers
         else {
             $data = '{"status":"0","message":""}';
         }
-
+        //error_log('hehehe I am ohohohohohohoh');
         return $data['value']['message'];
     }
 }

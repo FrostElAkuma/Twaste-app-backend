@@ -58,6 +58,7 @@ class ProductController extends Controller
             $meal->save();*/
 
             //This is the correct way to update an item in DB. I got it from stack overflow. Above incorrect code was me trying to do it out of my mind.
+            //Forr security reasons the rrequest->id needs to be rrequest->user->id need to change later
             Food::where('id', $request->id)->update(array('remaining' => $request->remaining));
             
 }

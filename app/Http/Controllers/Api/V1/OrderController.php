@@ -111,6 +111,7 @@ class OrderController extends Controller
             //->user() getting current user info. Also we have this fire_base token in our users DB
             //The user's device token will be the firebase token and we save it to DB ?
             //We will send the notification thro Helpers function as you can see
+            //error_log('I am inside api before sending notification');
             Helpers::send_order_notification($order, $request->user()->cm_firebase_token);
 
 
